@@ -18,6 +18,7 @@ builder.Services.AddDbContext<InsuranceDbContext>(options =>
 });
 
 builder.Services.AddScoped<AdminRepository>();
+builder.Services.AddScoped<InsuranceProductRepository>();
 builder.Services.AddSingleton<Token>();
 
 var app = builder.Build();

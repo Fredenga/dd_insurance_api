@@ -10,7 +10,7 @@ namespace InsuranceAPI.Repository
         public async Task<InsuranceProduct> CreateInsuranceProductAsync(InsuranceProductDTO productDTO)
         {
             
-            var check = await context.InsuranceProducts.FirstOrDefaultAsync(p => string.Equals(p.ProductName, productDTO.ProductName, StringComparison.OrdinalIgnoreCase));
+            var check = await context.InsuranceProducts.FirstOrDefaultAsync(p => p.ProductName.ToLower().Equals(productDTO.ProductName));
             if(check is not null)
             {
                 throw new Exception("Insurance Product already exists!");
@@ -42,18 +42,23 @@ namespace InsuranceAPI.Repository
         public async Task<InsuranceProduct> UpdateInsuranceProductAsync(int id, InsuranceProductDTO productDTO)
         {
             var product = await context.InsuranceProducts.FirstOrDefaultAsync(p => p.ProductId == id);
-            if(product is null)
+            if (product is null)
             {
                 throw new Exception("Product not found");
             }
-            context.Entry(product).State = EntityState.Detached;
-            var updatedProduct = context.InsuranceProducts.Update(product).Entity;
+
+            product.ProductName = productDTO.ProductName!;
+            product.Category = productDTO.Category!;
+            product.BasePremium = productDTO.BasePremium;
+            product.Description = productDTO.Description;
+
+            
             await context.SaveChangesAsync();
 
-            return updatedProduct;
+            return product;
         }
 
-        public async Task<string> DeleteInsuranceProductAsync(int id, InsuranceProductDTO productDTO)
+        public async Task<string> DeleteInsuranceProductAsync(int id)
         {
             var product = await context.InsuranceProducts.FirstOrDefaultAsync(p => p.ProductId == id);
             if (product is null)
