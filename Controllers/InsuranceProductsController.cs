@@ -2,6 +2,7 @@
 using InsuranceAPI.DTOs;
 using InsuranceAPI.Entities;
 using InsuranceAPI.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InsuranceAPI.Controllers
@@ -27,6 +28,7 @@ namespace InsuranceAPI.Controllers
             return Ok(product);
         }
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<InsuranceProduct>> CreateInsuranceProductAsync([FromBody] InsuranceProductDTO productDTO)
         {
             if (productDTO is null)
@@ -42,6 +44,7 @@ namespace InsuranceAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<InsuranceProduct>> UpdateInsuranceProductAsync(int id, [FromBody] InsuranceProductDTO productDTO)
         {
             if (productDTO is null)
@@ -57,6 +60,7 @@ namespace InsuranceAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<string>> DeleteInsuranceProductAsync(int id)
         {
 
