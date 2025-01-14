@@ -1,5 +1,6 @@
 using InsuranceAPI.Auth;
 using InsuranceAPI.Data;
+using InsuranceAPI.Interfaces;
 using InsuranceAPI.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<InsuranceDbContext>(options =>
 
 builder.Services.AddScoped<AdminRepository>();
 builder.Services.AddScoped<InsuranceProductRepository>();
+builder.Services.AddScoped<ICustomer, CustomerRepository>();
 builder.Services.AddSingleton<Token>();
 
 builder.Services.AddAuthorization();
