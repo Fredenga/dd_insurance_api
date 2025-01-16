@@ -1,4 +1,5 @@
-﻿using InsuranceAPI.Auth;
+﻿using FluentEmail.Core;
+using InsuranceAPI.Auth;
 using InsuranceAPI.Data;
 using InsuranceAPI.DTOs;
 using InsuranceAPI.Entities;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace InsuranceAPI.Repository
 {
     public record LoginRequest (string Email, string Password);
-    public class AdminRepository(InsuranceDbContext context, Token token)
+    public class AdminRepository(InsuranceDbContext context, Token token, IFluentEmail fluentEmail)
     {
 
         public async Task<Admin> Register(AdminDTO admin)
@@ -22,6 +23,11 @@ namespace InsuranceAPI.Repository
             }).Entity;
 
             await context.SaveChangesAsync();
+            await fluentEmail
+                .To(newAdmin.Email)
+                .Subject("EMAIL VERIFICATION FOR DDINSURANCE")
+                .Body("To verify your account, click here")
+                .SendAsync();
 
             return newAdmin;
         }
