@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using InsuranceAPI.Auth;
 using InsuranceAPI.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,8 @@ public partial class InsuranceDbContext : DbContext
     public virtual DbSet<InsuranceProduct> InsuranceProducts { get; set; }
 
     public virtual DbSet<Policy> Policies { get; set; }
+
+    public virtual DbSet<EmailVerificationToken> EmailVerificationToken { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
