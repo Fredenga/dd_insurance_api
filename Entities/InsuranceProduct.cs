@@ -15,24 +15,23 @@ public partial class InsuranceProduct
 
     [Column("product_name")]
     [StringLength(100)]
-    [Unicode(false)]
     public string ProductName { get; set; } = null!;
 
     [Column("category")]
     [StringLength(50)]
-    [Unicode(false)]
     public string Category { get; set; } = null!;
 
     [Column("description", TypeName = "text")]
     public string? Description { get; set; }
 
-    [Column("base_premium", TypeName = "decimal(10, 2)")]
+    // Use 'numeric' instead of 'decimal' in PostgreSQL
+    [Column("base_premium", TypeName = "numeric(10,2)")]
     public decimal BasePremium { get; set; }
 
-    [Column("created_at", TypeName = "datetime")]
+    [Column("created_at", TypeName = "timestamp")]
     public DateTime? CreatedAt { get; set; }
 
-    [Column("updated_at", TypeName = "datetime")]
+    [Column("updated_at", TypeName = "timestamp")]
     public DateTime? UpdatedAt { get; set; }
 
     [Column("created_by")]

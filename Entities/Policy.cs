@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 namespace InsuranceAPI.Entities;
 
 [Table("Policy")]
-[Index("PolicyNumber", Name = "UQ__Policy__96916872247AAA97", IsUnique = true)]
-[Index("StartDate", "EndDate", Name = "idx_policy_dates")]
-[Index("PolicyNumber", Name = "idx_policy_number")]
-[Index("Status", Name = "idx_policy_status")]
+[Index(nameof(PolicyNumber), Name = "UQ_Policy_PolicyNumber", IsUnique = true)]
+[Index(nameof(StartDate), nameof(EndDate), Name = "idx_policy_dates")]
+[Index(nameof(PolicyNumber), Name = "idx_policy_number")]
+[Index(nameof(Status), Name = "idx_policy_status")]
 public partial class Policy
 {
     [Key]
@@ -19,7 +19,6 @@ public partial class Policy
 
     [Column("policy_number")]
     [StringLength(20)]
-    [Unicode(false)]
     public string PolicyNumber { get; set; } = null!;
 
     [Column("product_id")]
@@ -31,27 +30,28 @@ public partial class Policy
     [Column("agent_id")]
     public int? AgentId { get; set; }
 
-    [Column("premium", TypeName = "decimal(10, 2)")]
+    // Use numeric type for premiums
+    [Column("premium", TypeName = "numeric(10, 2)")]
     public decimal Premium { get; set; }
 
-    [Column("start_date")]
-    public DateOnly StartDate { get; set; }
 
-    [Column("end_date")]
-    public DateOnly EndDate { get; set; }
+    [Column("start_date", TypeName = "date")]
+    public DateTime StartDate { get; set; }
+
+    [Column("end_date", TypeName = "date")]
+    public DateTime EndDate { get; set; }
 
     [Column("status")]
     [StringLength(20)]
-    [Unicode(false)]
     public string Status { get; set; } = null!;
 
     [Column("approved_by")]
     public int? ApprovedBy { get; set; }
 
-    [Column("created_at", TypeName = "datetime")]
+    [Column("created_at", TypeName = "timestamp")]
     public DateTime? CreatedAt { get; set; }
 
-    [Column("updated_at", TypeName = "datetime")]
+    [Column("updated_at", TypeName = "timestamp")]
     public DateTime? UpdatedAt { get; set; }
 
     [ForeignKey("AgentId")]

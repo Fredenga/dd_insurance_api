@@ -1,17 +1,11 @@
 SETUP INSTRUCTIONS:
 
-Git clone the project on your machine
+Install Packages: dotnet add package BCrypt.Net-Next Microsoft.AspNetCore.Authentication.JwtBearer Microsoft.EntityFrameworkCore Microsoft.EntityFrameworkCore.Design Microsoft.EntityFrameworkCore.SqlServer Microsoft.EntityFrameworkCore.Tools Swashbuckle.AspNetCore --version 4.0.3 --version 8.0.11 --version 9.0.0 --version 9.0.0 --version 9.0.0 --version 9.0.0 --version 7.2.0
 
-Open InsuranceAPI.sln using Visual Studio
+Install and configure Microsoft SQL Server Database: Create new database called InsuranceDB
 
-Build the project
+Add Initial Migration: dotnet ef migrations add InitialCreate
 
-Install and configure Microsoft SQL Server Management Studio (SSMS)
-
-On Microsoft SQL Server Management Studio, create a new database called InsuranceDB
-
-Add Initial Migration command: dotnet ef migrations add InitialCreate
-
-Update Database command: dotnet ef database update
+Update Database: dotnet ef database update
 
 Run source code

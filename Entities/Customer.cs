@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using InsuranceAPI.Entities;
 using Microsoft.EntityFrameworkCore;
-
-namespace InsuranceAPI.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 [Table("Customer")]
 [Index("Email", Name = "UQ__Customer__AB6E6164F45352DE", IsUnique = true)]
@@ -46,12 +44,13 @@ public partial class Customer
     [Unicode(false)]
     public string? KycStatus { get; set; }
 
-    [Column("created_at", TypeName = "datetime")]
+    [Column("created_at", TypeName = "timestamp")]
     public DateTime? CreatedAt { get; set; }
 
-    [Column("updated_at", TypeName = "datetime")]
+    [Column("updated_at", TypeName = "timestamp")]
     public DateTime? UpdatedAt { get; set; }
 
+    // This is the navigation property you need
     [InverseProperty("Customer")]
     public virtual ICollection<Policy> Policies { get; set; } = new List<Policy>();
 }

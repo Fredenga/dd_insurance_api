@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace InsuranceAPI.Entities;
 
 [Table("Admin")]
-[Index("Email", Name = "UQ__Admin__AB6E61640A610CCC", IsUnique = true)]
-[Index("Username", Name = "UQ__Admin__F3DBC572C2F856E5", IsUnique = true)]
+[Index(nameof(Email), Name = "UQ_Admin_Email", IsUnique = true)]
+[Index(nameof(Username), Name = "UQ_Admin_Username", IsUnique = true)]
 public partial class Admin
 {
     [Key]
@@ -17,28 +17,25 @@ public partial class Admin
 
     [Column("username")]
     [StringLength(50)]
-    [Unicode(false)]
     public string Username { get; set; } = null!;
 
     [Column("password_hash")]
     [StringLength(255)]
-    [Unicode(false)]
     public string PasswordHash { get; set; } = null!;
 
     [Column("email")]
     [StringLength(100)]
-    [Unicode(false)]
     public string Email { get; set; } = null!;
 
     [Column("role")]
     [StringLength(20)]
-    [Unicode(false)]
     public string Role { get; set; } = null!;
 
-    [Column("last_login", TypeName = "datetime")]
+    
+    [Column("last_login", TypeName = "timestamp")]
     public DateTime? LastLogin { get; set; }
 
-    [Column("created_at", TypeName = "datetime")]
+    [Column("created_at", TypeName = "timestamp")]
     public DateTime? CreatedAt { get; set; }
 
     [InverseProperty("Admin")]

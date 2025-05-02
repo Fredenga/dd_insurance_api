@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace InsuranceAPI.Entities;
 
 [Table("AuditLog")]
-[Index("Timestamp", Name = "idx_audit_timestamp")]
+[Index(nameof(Timestamp), Name = "idx_audit_timestamp")]
 public partial class AuditLog
 {
     [Key]
@@ -19,12 +19,10 @@ public partial class AuditLog
 
     [Column("action")]
     [StringLength(50)]
-    [Unicode(false)]
     public string Action { get; set; } = null!;
 
     [Column("entity_type")]
     [StringLength(50)]
-    [Unicode(false)]
     public string EntityType { get; set; } = null!;
 
     [Column("entity_id")]
@@ -32,10 +30,9 @@ public partial class AuditLog
 
     [Column("ip_address")]
     [StringLength(45)]
-    [Unicode(false)]
     public string? IpAddress { get; set; }
 
-    [Column("timestamp", TypeName = "datetime")]
+    [Column("timestamp", TypeName = "timestamp")]
     public DateTime? Timestamp { get; set; }
 
     [ForeignKey("AdminId")]

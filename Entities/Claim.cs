@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace InsuranceAPI.Entities;
 
 [Table("Claim")]
-[Index("Status", Name = "idx_claim_status")]
+[Index(nameof(Status), Name = "idx_claim_status")]
 public partial class Claim
 {
     [Key]
@@ -17,10 +17,12 @@ public partial class Claim
     [Column("policy_id")]
     public int PolicyId { get; set; }
 
-    [Column("claim_date")]
-    public DateOnly ClaimDate { get; set; }
+   
+    [Column("claim_date", TypeName = "date")]
+    public DateTime ClaimDate { get; set; }
 
-    [Column("amount", TypeName = "decimal(12, 2)")]
+    // Use 'numeric' for PostgreSQL decimals
+    [Column("amount", TypeName = "numeric(12,2)")]
     public decimal Amount { get; set; }
 
     [Column("description", TypeName = "text")]
@@ -28,16 +30,15 @@ public partial class Claim
 
     [Column("status")]
     [StringLength(20)]
-    [Unicode(false)]
     public string Status { get; set; } = null!;
 
     [Column("processed_by")]
     public int? ProcessedBy { get; set; }
 
-    [Column("created_at", TypeName = "datetime")]
+    [Column("created_at", TypeName = "timestamp")]
     public DateTime? CreatedAt { get; set; }
 
-    [Column("updated_at", TypeName = "datetime")]
+    [Column("updated_at", TypeName = "timestamp")]
     public DateTime? UpdatedAt { get; set; }
 
     [ForeignKey("PolicyId")]
